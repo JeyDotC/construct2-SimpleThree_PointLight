@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<c2addon>
+	<!-- One of: plugin, behavior, effect -->
+	<type>behavior</type>
+	
+	<name>SimpleThree_PointLight</name>
+	<version>1.0.0</version>
+	<author>JeyDotC</author>
+	<website>https://github.com/JeyDotC/construct2-SimpleThree_PointLight</website>
+	<documentation>https://github.com/JeyDotC/construct2-SimpleThree_PointLight</documentation>
+	<description>Creates a Three.js point light object.</description>
+</c2addon>
