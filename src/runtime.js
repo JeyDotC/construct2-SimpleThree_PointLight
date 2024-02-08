@@ -73,9 +73,12 @@ cr.behaviors.SimpleThree_PointLight = function (runtime) {
 
 
     behinstProto.onCreate = function () {
-        this.color = this.properties[0];
-        const { color, properties } = this;
-        console.log({ color, properties });
+        const colorRef = this.properties[0];
+        this.color = new THREE.Color(
+            cr.GetRValue(colorRef) / 255,
+            cr.GetGValue(colorRef) / 255,
+            cr.GetBValue(colorRef) / 255
+        );
         this.intensity = this.properties[1];
         this.distance = this.properties[2];
         this.elevation = this.properties[3];
@@ -91,7 +94,7 @@ cr.behaviors.SimpleThree_PointLight = function (runtime) {
         this.pixelsTo3DUnits = this.simpleThree.pixelsTo3DUnits.bind(this.simpleThree);
 
         const distance3D = this.distance === 0 ? 0 : this.pixelsTo3DUnits(this.distance);
-        this.pointLight = new THREE.PointLight(new THREE.Color(this.color), this.intensity, distance3D);
+        this.pointLight = new THREE.PointLight(this.color, this.intensity, distance3D);
 
         this.pointLight.position.set(
             this.pixelsTo3DUnits(this.inst.x),
@@ -115,9 +118,8 @@ cr.behaviors.SimpleThree_PointLight = function (runtime) {
         // called when associated object is being destroyed
         // note runtime may keep the object and behavior alive after this call for recycling;
         // release, recycle or reset any references here as necessary
-       this.simpleThree?.scene?.remove(this.pointLight);
-       this.pointLight?.dispose();
-       this.pointLight = undefined;
+        this.simpleThree?.scene?.remove(this.pointLight);
+        this.pointLight = undefined;
     };
 
     // called when saving the full state of the game
@@ -126,7 +128,7 @@ cr.behaviors.SimpleThree_PointLight = function (runtime) {
         // note you MUST use double-quote syntax (e.g. "property": value) to prevent
         // Closure Compiler renaming and breaking the save format
         return {
-            "c": this.color,
+            "c": this.color.getHex(),
             "i": this.intensity,
             "d": this.distance,
             "e": this.elevation,
@@ -135,10 +137,12 @@ cr.behaviors.SimpleThree_PointLight = function (runtime) {
 
     // called when loading the full state of the game
     behinstProto.loadFromJSON = function (o) {
-        this.color = o["c"];
-        this.intensity = o["i"];
-        this.distance = o["d"];
-        this.elevation = o["e"];
+        const acts = this.plugin.acts;
+
+        acts.SetPointLightColor.bind(this)(o["c"]);
+        acts.SetElevationFrom2D.bind(this)(o["e"]);
+        acts.SetPointLightDistance.bind(this)(o["d"]);
+        acts.SetPointLightIntensity.bind(this)(o["i"]);
     };
 
     behinstProto.tick = function () {
@@ -156,10 +160,10 @@ cr.behaviors.SimpleThree_PointLight = function (runtime) {
         propsections.push({
             "title": this.type.name,
             "properties": [
-                {"name": "Color", "value": this.color},
-                {"name": "Intensity", "value": this.intensity},
-                {"name": "Distance", "value": this.distance},
-                {"name": "Elevation", "value": this.elevation},
+                { "name": "Color", "value": `#${this.color.getHexString()}` },
+                { "name": "Intensity", "value": this.intensity },
+                { "name": "Distance", "value": this.distance },
+                { "name": "Elevation", "value": this.elevation },
             ]
         });
     };
@@ -217,8 +221,7 @@ SetPointLightDistance
     */
 
     Acts.prototype.SetPointLightColor = function (color) {
-        this.color = color;
-        this.pointLight.color = new THREE.Color(this.color)
+        this.pointLight.color = this.color = new THREE.Color(color)
     };
 
     Acts.prototype.SetElevationFrom2D = function (elevation) {
