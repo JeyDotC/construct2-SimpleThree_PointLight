@@ -71,14 +71,18 @@ cr.behaviors.SimpleThree_PointLight = function (runtime) {
         return simpleThreeInstances[0];
     };
 
-
-    behinstProto.onCreate = function () {
-        const colorRef = this.properties[0];
-        this.color = new THREE.Color(
+    function colorFromRef(colorRef) {
+        return new THREE.Color(
             cr.GetRValue(colorRef) / 255,
             cr.GetGValue(colorRef) / 255,
             cr.GetBValue(colorRef) / 255
         );
+    }
+
+    behinstProto.onCreate = function () {
+        const colorRef = this.properties[0];
+        this.color = colorFromRef(colorRef);
+
         this.intensity = this.properties[1];
         this.distance = this.properties[2];
         this.elevation = this.properties[3];
@@ -222,6 +226,10 @@ SetPointLightDistance
 
     Acts.prototype.SetPointLightColor = function (color) {
         this.pointLight.color = this.color = new THREE.Color(color)
+    };
+
+    Acts.prototype.SetPointLightColorFromNumber = function (color) {
+        this.pointLight.color = this.color = colorFromRef(color);
     };
 
     Acts.prototype.SetElevationFrom2D = function (elevation) {

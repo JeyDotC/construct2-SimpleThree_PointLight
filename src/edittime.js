@@ -18,7 +18,7 @@ function GetBehaviorSettings()
 	return {
 		"name":			"SimpleThree PointLight",			// as appears in 'add behavior' dialog, can be changed as long as "id" stays the same
 		"id":			"SimpleThree_PointLight",			// this is used to SimpleThree_PointLight this behavior and is saved to the project; never change it
-		"version":		"1.1",					// (float in x.y format) Behavior version - C2 shows compatibility warnings based on this
+		"version":		"1.0",					// (float in x.y format) Behavior version - C2 shows compatibility warnings based on this
 		"description":	"Makes an object act as a point of light.",
 		"author":		"JeyDotC",
 		"help url":		"https://github.com/JeyDotC/construct2-SimpleThree_PointLight",
@@ -44,6 +44,9 @@ AddAction(2, 0, "Set PointLight maximum distance in 2D pixels", "Point Light", "
 
 AddNumberParam("Elevation", "The new point light's elevation in 2D Pixels.", 0);
 AddAction(3, 0, "Set Point Light's Elevation from 2D pixels", "Transform", "Point Light Elevation to <b>{0}</b>", "Set the Point Light's Elevation from 2D pixel length.", "SetElevationFrom2D");
+
+AddNumberParam('Color', 'Point light color using rgb() expression', cr.RGB(255, 255, 255));
+AddAction(0, 0, "Set The Point light Color from number", "Point Light", "The Point light Color is <b>{0}</b> now", "Set the Point light Color.", "SetPointLightColorFromNumber");
 
 // Conditions
 
