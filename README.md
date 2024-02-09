@@ -23,6 +23,7 @@ Makes an object act as a point of light.
 |**Set The Point light Color**| Set the Point light Color. | - **Color** _string_ = `"#ffffff"`: Point light color in CSS-style string  |
 |**Set Point Light Intensity**| Set the Point Light's Intensity. | - **Intensity** _number_ = `1`: The new point light's intensity.  |
 |**Set PointLight maximum distance in 2D pixels**| Set the Point Light's maximum distance in pixels. | - **Distance** _number_: The point light's maximum distance in 2D pixels (0 = no limit).  |
+|**Set The Point light Color from number**| Set the Point light Color. | - **Color** _number_ = `ffffff`: Point light color using rgb() expression  |
 | |**Transform**| |
 |**Set Point Light's Elevation from 2D pixels**| Set the Point Light's Elevation from 2D pixel length. | - **Elevation** _number_: The new point light's elevation in 2D Pixels.  |
 

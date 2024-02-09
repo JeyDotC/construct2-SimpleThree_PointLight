@@ -46,7 +46,7 @@ AddNumberParam("Elevation", "The new point light's elevation in 2D Pixels.", 0);
 AddAction(3, 0, "Set Point Light's Elevation from 2D pixels", "Transform", "Point Light Elevation to <b>{0}</b>", "Set the Point Light's Elevation from 2D pixel length.", "SetElevationFrom2D");
 
 AddNumberParam('Color', 'Point light color using rgb() expression', cr.RGB(255, 255, 255));
-AddAction(0, 0, "Set The Point light Color from number", "Point Light", "The Point light Color is <b>{0}</b> now", "Set the Point light Color.", "SetPointLightColorFromNumber");
+AddAction(4, 0, "Set The Point light Color from number", "Point Light", "The Point light Color is <b>{0}</b> now", "Set the Point light Color.", "SetPointLightColorFromNumber");
 
 // Conditions
 
